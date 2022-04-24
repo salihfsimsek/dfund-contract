@@ -17,7 +17,7 @@ export class Company {
   description: string;
   promoVideo: string;
   employeeNumber: u32;
-  needMoney: u128;
+  neededMoney: u128;
   totalMoney: u128;
 
   constructor(
@@ -35,7 +35,7 @@ export class Company {
     this.description = description;
     this.promoVideo = promoVideo;
     this.employeeNumber = employeeNumber;
-    this.needMoney = neededMoney;
+    this.neededMoney = neededMoney;
     this.totalMoney = totalMoney;
   }
 

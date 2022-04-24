@@ -38,4 +38,32 @@ export class Company {
     this.needMoney = neededMoney;
     this.totalMoney = totalMoney;
   }
+
+  static insert(
+    name: string,
+    logo: string,
+    description: string,
+    promotionVideo: string,
+    employeeNumber: number,
+    neededMoney: u128,
+    totalMoney: u128
+  ): Company {
+    let oneNear = u128.fromString("1000000000000000000000000");
+    neededMoney = u128.mul(neededMoney, oneNear);
+    //Create a new company
+    const company = new Company(
+      name,
+      logo,
+      description,
+      promotionVideo,
+      employeeNumber,
+      neededMoney,
+      totalMoney
+    );
+
+    //Insert the company into the map
+    companies.set(company.id, company);
+
+    return company;
+  }
 }

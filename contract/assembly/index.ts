@@ -6,7 +6,7 @@ export function create(
   logo: string,
   description: string,
   promoVideo: string,
-  employeeNumber: number,
+  employeeNumber: u32,
   neededMoney: u128,
   totalMoney: u128
 ): Company {
@@ -49,4 +49,13 @@ export function del(companyId: u32): string {
 
 export function getCompanies(): Company[] {
   return Company.getAllCompanies();
+}
+
+export function fundTheCompany(companyId: u32): Company {
+  const company = Company.fundTheCompany(companyId);
+  return company;
+}
+
+export function onTransferComplete(): void {
+  logging.log("transfer completed");
 }

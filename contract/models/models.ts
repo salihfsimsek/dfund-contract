@@ -16,7 +16,7 @@ export class Company {
   logo: string;
   description: string;
   promoVideo: string;
-  employeeNumber: number;
+  employeeNumber: u32;
   needMoney: u128;
   totalMoney: u128;
 
@@ -25,7 +25,7 @@ export class Company {
     logo: string,
     description: string,
     promoVideo: string,
-    employeeNumber: number,
+    employeeNumber: u32,
     neededMoney: u128,
     totalMoney: u128
   ) {
@@ -44,12 +44,13 @@ export class Company {
     logo: string,
     description: string,
     promotionVideo: string,
-    employeeNumber: number,
+    employeeNumber: u32,
     neededMoney: u128,
     totalMoney: u128
   ): Company {
     let oneNear = u128.fromString("1000000000000000000000000");
     neededMoney = u128.mul(neededMoney, oneNear);
+    totalMoney = u128.mul(totalMoney, oneNear);
     //Create a new company
     const company = new Company(
       name,
@@ -111,5 +112,32 @@ export class Company {
 
   static getAllCompanies(): Company[] {
     return companies.values();
+  }
+
+  static fundTheCompany(companyId: u32): Company {
+    assert(companies.contains(companyId), "Company not found");
+
+    //Get specific company
+    const company = this.getCompanyById(companyId);
+
+    //If user is the owner of company then the user cannot fund the company
+    assert(!(context.sender == company.owner), "You can not fund own company");
+
+    //Get contract name
+    const contract = context.contractName;
+
+    const XCC_GAS: u64 = 3_000_000_000_000;
+
+    ContractPromiseBatch.create(company.owner)
+      .transfer(context.attachedDeposit)
+      .then(contract)
+      .function_call("onTransferComplete", "{}", u128.Zero, XCC_GAS);
+
+    company.totalMoney = u128.add(company.totalMoney, context.attachedDeposit);
+
+    //Update the company in the map
+    companies.set(company.id, company);
+
+    return company;
   }
 }

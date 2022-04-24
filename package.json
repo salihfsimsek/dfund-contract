@@ -1,0 +1,26 @@
+{
+  "name": "dfund-contract",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
+  },
+  "scripts": {
+    "build-contract": "asb",
+    "deploy-contract-dev": "yarn build-contract && near dev-deploy ./build/release/contract.wasm",
+    "clean-contract": "rm -rf ./build && rm -rf ./neardev"
+  },
+  "dependencies": {
+    "@assemblyscript/loader": "^0.20.4",
+    "asbuild": "^0.2.0"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.20.4",
+    "near-sdk-as": "^3.2.3"
+  }
+}

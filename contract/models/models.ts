@@ -66,4 +66,37 @@ export class Company {
 
     return company;
   }
+
+  static getCompanyById(companyId: u32): Company {
+    //If company was not in list we will return error
+    assert(companies.contains(companyId), "Company not found");
+
+    //Get specific company
+    return companies.getSome(companyId);
+  }
+
+  static findByIdAndUpdate(
+    companyId: u32,
+    name: string,
+    logo: string,
+    description: string,
+    promoVideo: string,
+    employeeNumber: u32
+  ): Company {
+    assert(companies.contains(companyId), "Company not found");
+    //Get specific company
+    const company = this.getCompanyById(companyId);
+
+    //Update the company
+    company.name = name;
+    company.logo = logo;
+    company.description = description;
+    company.promoVideo = promoVideo;
+    company.employeeNumber = employeeNumber;
+
+    //Update the company in the map
+    companies.set(company.id, company);
+
+    return company;
+  }
 }

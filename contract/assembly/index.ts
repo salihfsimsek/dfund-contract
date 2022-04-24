@@ -20,3 +20,25 @@ export function create(
     totalMoney
   );
 }
+
+export function getById(companyId: u32): Company {
+  return Company.getCompanyById(companyId);
+}
+
+export function update(
+  companyId: u32,
+  name: string,
+  logo: string,
+  description: string,
+  promoVideo: string,
+  employeeNumber: u32
+): Company {
+  return Company.findByIdAndUpdate(
+    companyId,
+    name,
+    logo,
+    description,
+    promoVideo,
+    employeeNumber
+  );
+}

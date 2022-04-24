@@ -42,3 +42,11 @@ export function update(
     employeeNumber
   );
 }
+
+export function del(companyId: u32): string {
+  return Company.findByIdAndDelete(companyId);
+}
+
+export function getCompanies(): Company[] {
+  return Company.getAllCompanies();
+}

@@ -99,4 +99,17 @@ export class Company {
 
     return company;
   }
+
+  static findByIdAndDelete(companyId: u32): string {
+    assert(companies.contains(companyId), "Company not found");
+
+    //Delete the company
+    companies.delete(companyId);
+
+    return "Company deleted";
+  }
+
+  static getAllCompanies(): Company[] {
+    return companies.values();
+  }
 }
